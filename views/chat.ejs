@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Groups and Users</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+        /* base style */
+        * {
+        margin: 0;
+        font-family: "Quicksand";
+        color: #333;
+        }
+
+        .chat-groups-users {
+        max-width: 400px;
+        margin-top: 100px;
+        margin-bottom: 0;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        }
+
+        .chat-groups-users h1 {
+        font-size: 20px;
+        color: #f1356d;
+        margin-bottom: 20px;
+        }
+
+        .chat-groups-users h2 {
+        font-size: 20px;
+        color: #f1356d;
+        margin-bottom: 20px;
+        }
+
+        .chat-groups-users ul {
+            width: 50%;
+            margin-left: 25%;
+        }
+
+        .chat-groups-users .chat-groups-container {
+            border: 5px;
+            border-color: #7e7b7b;
+        }
+
+        .chat-groups-users .chat-users-container {
+            border: 5px;
+            border-color: #7e7b7b;
+        }
+
+        .chat-groups-users a {
+        text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-groups-users">
+        <h1>Welcome to the Chat Page</h1></br>
+        <h1>Chose a Group to chat in or a User to chat with</h1></br>
+        <div class="chat-groups-container">
+            <h2>Chat Groups</h2>
+            <div>
+                <% chatGroups.forEach(group => { %>
+                    <div class="js-group" data-group-id="<%= group.id %>">
+                        <a href="#" data-group-id="<%= group.id %>"><%= group.desc %></a>
+                    </div>
+                <% }); %>
+                </div>
+        </div>
+        
+        <div class="chat-users-container">
+            <h2>Users</h2>
+            <div>
+                <% usersData.forEach(user => { %>
+                    <div class="js-user" data-user-id="<%= user.id %>">
+                        <a href="#" data-user-id="<%= user.id %>"><%= user.username %></a>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+    <script>
+        const userList = document.querySelectorAll('.js-user');
+        const groupList = document.querySelectorAll('.js-group');
+
+        userList.forEach(user => {
+            user.addEventListener('click', (event) => {
+                event.preventDefault();
+    
+                const userId = user.getAttribute('data-user-id');
+                localStorage.setItem('userId', userId);
+
+                window.location.href = '/chatPage';
+            });
+        });
+
+        groupList.forEach(group => {
+            group.addEventListener('click', (event) => {
+                event.preventDefault();
+    
+                const groupId = group.getAttribute('data-group-id');
+                localStorage.setItem('groupId', groupId);
+
+                window.location.href = '/groupChatPage';
+            });
+        });
+    </script>
+</body>
+</html>
